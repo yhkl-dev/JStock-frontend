@@ -1,88 +1,101 @@
 <template>
   <div class="common-container">
     <el-row :gutter="20">
-      <el-col :span="6">
-        <el-card class="box-card" shadow="always">
-          <div slot="header">
-            <el-button type="text" class="button">MaterialGroup</el-button>
-          </div>
-          <div class="card-content">settings for material group</div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="box-card">
-          <div slot="header">
-            <el-button type="text" class="button">PurchaseType</el-button>
-          </div>
-          <div class="card-content">settings for purchase type</div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="box-card">
-          <div slot="header">
-            <el-button type="text" class="button">TechCode</el-button>
-          </div>
-          <div class="card-content">settings for plant tech code</div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="box-card">
-          <div slot="header">
-            <el-button type="text" class="button">CurrencyType</el-button>
-          </div>
-          <div class="card-content">settings for currency type, ex: $/￥</div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="box-card">
-          <div slot="header">
-            <el-button type="text" class="button">TechnologyCode</el-button>
-          </div>
-          <div class="card-content">settings for technology code</div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="box-card">
-          <div slot="header">
-            <el-button type="text" class="button">ImportancyLevel</el-button>
-          </div>
-          <div class="card-content">settings for Importancy level</div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <el-card class="box-card">
-          <div slot="header">
-            <el-button type="text" class="button">GICategory</el-button>
-          </div>
-          <div class="card-content">settings for GI Category</div>
-        </el-card>
-      </el-col>
-      <el-col :span="6">
-        <basic-card card-name="GICategory" card-content="settingsforGCategory" />
+      <el-col v-for="d in cardData" :key="d.cardName" :span="6">
+        <div @click="handleClick(d.cardName)">
+          <basic-card :card-name="d.cardName" :card-content="d.cardContent" />
+        </div>
       </el-col>
     </el-row>
+    <el-dialog
+      :title="dialogTitle"
+      :visible.sync="dialogVisible"
+      width="50%"
+      center
+    >
+      <el-table :data="tableData" border>
+        <el-table-column v-for="(item, index) in tableHead" :key="index" :label="item" align="center">
+          <template slot-scope="scope">{{ scope.row[item] }}</template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 <script>
 import BasicCard from './basic-card'
+import { getPurchaseTypeList } from '@/api/purchase_type'
 export default {
   name: 'Basic',
   components: { BasicCard },
   data() {
-    return {}
+    return {
+      dialogTitle: '',
+      tableData: [],
+      tableHead: [],
+      dialogVisible: false,
+      cardData: [
+        {
+          cardName: 'MaterialGroup',
+          cardContent: 'settings for plant tech code'
+        },
+        {
+          cardName: 'PurchaseType',
+          cardContent: 'settings for purchase type'
+        },
+        {
+          cardName: 'TechCode',
+          cardContent: 'settings for plant tech code'
+        },
+        {
+          cardName: 'CurrencyType',
+          cardContent: 'settings for currency type, ex: $/￥'
+        },
+        {
+          cardName: 'TechnologyCode',
+          cardContent: 'settings for technology code'
+        },
+        {
+          cardName: 'ImportancyLevel',
+          cardContent: 'settings for Importancy level'
+        },
+        {
+          cardName: 'GICategory',
+          cardContent: 'settings for GI Category'
+        }
+      ]
+    }
   },
   methods: {
-    Onclick() {
-      console.log('click')
+    handleClick(cardName) {
+      this.dialogVisible = true
+      this.dialogTitle = cardName
+      switch (cardName) {
+        case 'PurchaseType':
+          this.tableHead = []
+          getPurchaseTypeList().then(res => {
+            this.tableData = res.data.result
+            if (res.data.result.length !== 0) {
+              for (var key in res.data.result[0]) {
+                if (key !== 'id') {
+                  this.tableHead.push(key)
+                }
+              }
+            }
+            console.log(this.tableHead)
+
+            console.log(this.tableData)
+          })
+          break
+        case 'MaterialGroup':
+          console.log('MaterialGroup')
+          break
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-.el-button {
-  color: #000000;
-}
 .common-container {
   margin: 30px;
 }

@@ -1,10 +1,12 @@
 <template>
-  <el-card class="box-card" shadow="always">
-    <div slot="header">
-      <el-button type="text" class="button">{{ cardName }}</el-button>
-    </div>
-    <div class="card-content">{{ cardContent }}</div>
-  </el-card>
+  <div>
+    <el-card class="box-card" shadow="always">
+      <div slot="header">
+        <el-button type="text" class="button">{{ cardName }}</el-button>
+      </div>
+      <div class="card-content">{{ cardContent }}</div>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -20,19 +22,18 @@ export default {
       default: ''
     }
   }
-
 }
-
 </script>
 
 <style scoped>
-  .el-button {
-    color: #000000;
-  }
-  .card-content {
-    color: gray;
-  }
-  .box-card {
-    height: 120px;
-  }
+.button {
+  color: #000000;
+}
+.card-content {
+  color: gray;
+}
+.box-card {
+  height: 5%;
+  max-height: 150px;
+}
 </style>

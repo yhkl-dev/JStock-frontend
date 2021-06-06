@@ -4,11 +4,11 @@
 
 <script>
 export default {
-  name: "Permission",
+  name: 'Permission',
   data() {
-    return {};
-  },
-};
+    return {}
+  }
+}
 </script>
 
 <style scoped>
