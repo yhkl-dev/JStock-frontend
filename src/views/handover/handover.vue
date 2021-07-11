@@ -1,14 +1,14 @@
 <template>
-  <div class="common-container">hand over info</div>
+  <div class="app-container">hand over info</div>
 </template>
 
 <script>
 export default {
-  name: "Handover",
+  name: 'Handover',
   data() {
-    return {};
-  },
-};
+    return {}
+  }
+}
 </script>
 
 <style scoped>

@@ -79,7 +79,7 @@ export const constantRoutes = [
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
         name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        meta: { title: 'Dashboard', icon: 'dashboard-new', affix: true }
       }
     ]
   },
@@ -98,7 +98,6 @@ export const constantRoutes = [
     ]
   }
 ]
-
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
@@ -171,7 +170,7 @@ export const asyncRoutes = [
     name: 'ErrorPages',
     meta: {
       title: 'Basic Config',
-      icon: 'el-icon-setting'
+      icon: 'basic'
     },
     children: [
       {
@@ -189,7 +188,7 @@ export const asyncRoutes = [
     name: 'Handover',
     meta: {
       title: 'Handover',
-      icon: 'table'
+      icon: 'handover'
     },
     children: [
       {
@@ -197,6 +196,42 @@ export const asyncRoutes = [
         component: () => import('@/views/handover/handover'),
         name: 'Handover',
         meta: { title: 'Handover', noCache: true }
+      }
+    ]
+  },
+  {
+    path: '/materialPlanning',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'materialPlanning',
+    meta: {
+      title: 'material Planning',
+      icon: 'planning'
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/materialPlanning/index'),
+        name: 'MaterialPlanning',
+        meta: { title: 'Material Planning', icon: 'planning', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/material',
+    component: Layout,
+    redirect: 'noRedirect',
+    name: 'Material',
+    meta: {
+      title: 'Material',
+      icon: 'material'
+    },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/material/index'),
+        name: 'Material',
+        meta: { title: 'Material', noCache: true }
       }
     ]
   },
@@ -250,7 +285,11 @@ export const asyncRoutes = [
         path: 'edit/:id(\\d+)',
         component: () => import('@/views/example/edit'),
         name: 'EditArticle',
-        meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+        meta: {
+          title: 'Edit Article',
+          noCache: true,
+          activeMenu: '/example/list'
+        },
         hidden: true
       },
       {
@@ -330,11 +369,12 @@ export const asyncRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 
